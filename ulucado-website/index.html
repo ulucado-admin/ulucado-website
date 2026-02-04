@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ulucado - Premium Mobile Apps</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=Inter:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2D3748;
+            --purple: #667eea;
+            --purple-dark: #5a67d8;
+            --blue: #4299e1;
+            --pink: #ed64a6;
+            --text: #1A202C;
+            --text-light: #718096;
+            --bg: #F7FAFC;
+            --white: #FFFFFF;
+            
+            /* App-consistent colors for Dopamine page - muted purplish-cyan */
+            --app-cyan: #6b7fd7;
+            --app-teal: #5a67c4;
+            --app-red: #ef4444;
+            --app-purple: #8b7fc7;
+            --dark-bg: #0f172a;
+            --darker-bg: #020617;
+            --card-bg: #1e293b;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            background: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 600;
+            font-style: italic;
+            color: var(--primary);
+            letter-spacing: -0.5px;
+            cursor: pointer;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .est {
+            font-size: 11px;
+            font-style: normal;
+            color: var(--text-light);
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 48px;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--purple);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--purple);
+        }
+
+        /* Page Container */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 180px 40px 120px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255,255,255,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255,255,255,0.08) 0%, transparent 50%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 72px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 24px;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 24px;
+            color: rgba(255,255,255,0.95);
+            max-width: 700px;
+            margin: 0 auto 48px;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+            color: var(--purple-dark);
+            padding: 20px 48px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 18px;
+            text-decoration: none;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 120px 40px;
+        }
+
+        .section-alt {
+            background: var(--bg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 80px;
+        }
+
+        .section-label {
+            color: var(--purple);
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .section-subtitle {
+            font-size: 20px;
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* About Grid */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+
+        .about-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.3;
+        }
+
+        .about-content p {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 24px;
+        }
+
+        .about-visual {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            height: 500px;
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .about-visual::before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.15);
+            border-radius: 50px;
+            border: 3px solid rgba(255,255,255,0.3);
+            box-shadow: 
+                0 0 40px rgba(255,255,255,0.2),
+                inset 0 0 40px rgba(255,255,255,0.1);
+        }
+
+        .about-visual::after {
+            content: '📱';
+            position: absolute;
+            font-size: 120px;
+            opacity: 0.9;
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .feature-card {
+            padding: 48px 32px;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border-color: var(--purple);
+        }
+
+        .feature-icon {
+            font-size: 56px;
+            margin-bottom: 24px;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        /* Dopamine Hero - Different Style */
+        .dopamine-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            padding: 180px 40px 100px;
+        }
+
+        .dopamine-hero-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 80px;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .dopamine-hero-content h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 24px;
+            line-height: 1.1;
+            text-align: left;
+        }
+
+        .dopamine-hero-content p {
+            font-size: 22px;
+            color: rgba(255,255,255,0.95);
+            margin-bottom: 40px;
+            line-height: 1.7;
+            text-align: left;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 36px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-appstore {
+            background: white;
+            color: var(--purple-dark);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+        }
+
+        .btn-playstore {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-4px);
+        }
+
+        /* Phone Mockup */
+        .phone-mockup-container {
+            position: relative;
+            text-align: center;
+        }
+
+        .phone-mockup {
+            width: 100%;
+            max-width: 320px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .phone-frame {
+            position: relative;
+            padding: 16px;
+            background: linear-gradient(145deg, #2D3748, #1A202C);
+            border-radius: 48px;
+            box-shadow: 
+                0 30px 90px rgba(0,0,0,0.4),
+                inset 0 2px 10px rgba(255,255,255,0.1);
+        }
+
+        .phone-screen {
+            border-radius: 36px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .phone-screen img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Dopamine Features */
+        .dopamine-intro {
+            background: white;
+            padding: 100px 40px;
+        }
+
+        .intro-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .intro-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: var(--primary);
+        }
+
+        .intro-content p {
+            font-size: 20px;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .intro-highlight {
+            background: linear-gradient(135deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1));
+            padding: 32px;
+            border-radius: 16px;
+            border-left: 4px solid var(--purple);
+            margin: 40px 0;
+        }
+
+        .intro-highlight p {
+            font-size: 18px;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* Hunter vs Guardian */
+        .modes-section {
+            background: var(--bg);
+            padding: 100px 40px;
+        }
+
+        .modes-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 1200px;
+            margin: 60px auto 0;
+        }
+
+        .mode-card {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 24px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.4s ease;
+        }
+
+        .mode-card:hover {
+            border-color: var(--purple);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(102,126,234,0.15);
+        }
+
+        .mode-icon {
+            font-size: 80px;
+            margin-bottom: 24px;
+        }
+
+        .mode-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--primary);
+        }
+
+        .mode-subtitle {
+            font-size: 16px;
+            color: var(--purple);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 24px;
+        }
+
+        .mode-description {
+            font-size: 17px;
+            line-height: 1.7;
+            color: var(--text-light);
+            margin-bottom: 32px;
+        }
+
+        .mode-benefits {
+            text-align: left;
+            background: var(--bg);
+            padding: 24px;
+            border-radius: 12px;
+        }
+
+        .mode-benefits li {
+            margin-bottom: 12px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Screenshots Showcase */
+        .screenshots-section {
+            padding: 100px 40px;
+            background: white;
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1200px;
+            margin: 60px auto 0;
+        }
+
+        .screenshot-item {
+            text-align: center;
+        }
+
+        .screenshot-mockup {
+            background: linear-gradient(145deg, #2D3748, #1A202C);
+            padding: 12px;
+            border-radius: 36px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-bottom: 24px;
+        }
+
+        .screenshot-mockup img {
+            width: 100%;
+            border-radius: 28px;
+            display: block;
+        }
+
+        .screenshot-caption {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .screenshot-description {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            background: linear-gradient(135deg, rgba(102,126,234,0.05), rgba(118,75,162,0.05));
+            padding: 100px 40px;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            max-width: 1200px;
+            margin: 60px auto 0;
+        }
+
+        .step {
+            text-align: center;
+            padding: 32px 20px;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            color: white;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .step h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .step p {
+            font-size: 15px;
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--purple) 0%, var(--purple-dark) 100%);
+            padding: 100px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            top: -300px;
+            right: -300px;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 56px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .cta-section p {
+            font-size: 20px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 40px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: var(--purple-dark);
+            padding: 20px 56px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 18px;
+            text-decoration: none;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 60px rgba(0,0,0,0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: rgba(255,255,255,0.8);
+            padding: 80px 40px 40px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 600;
+            font-style: italic;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .footer-tagline {
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        .footer-col h4 {
+            color: white;
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero h1, .dopamine-hero-content h1 {
+                font-size: 48px;
+            }
+
+            .section-title {
+                font-size: 40px;
+            }
+
+            .about-grid, .dopamine-hero-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .modes-grid, .screenshots-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .steps-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                gap: 24px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .hero, .dopamine-hero {
+                padding: 140px 24px 80px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .section {
+                padding: 80px 24px;
+            }
+
+            .section-title {
+                font-size: 32px;
+            }
+
+            .features-grid,
+            .screenshots-grid,
+            .steps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .download-buttons {
+                flex-direction: column;
+            }
+
+            .btn-download {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* ========================================
+           COMBAT THEME - DOPAMINE PAGE ONLY
+           ======================================== */
+
+        /* Dark background only for dopamine page */
+        #dopamine {
+            background: var(--darker-bg);
+            position: relative;
+        }
+
+        #dopamine::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(107,127,215,0.03) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(191,0,255,0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        /* Scanline effect for dopamine page */
+        #dopamine::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(0,0,0,0.15) 0px,
+                transparent 1px,
+                transparent 2px,
+                rgba(0,0,0,0.15) 3px
+            );
+            pointer-events: none;
+            opacity: 0.03;
+        }
+
+        /* Combat Hero */
+        #dopamine .dopamine-hero {
+            background: linear-gradient(135deg, var(--darker-bg) 0%, var(--dark-bg) 50%, var(--darker-bg) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #dopamine .dopamine-hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(107,127,215,0.06) 0%, transparent 70%);
+            animation: combatPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes combatPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; }
+        }
+
+        #dopamine .dopamine-hero-content h1 {
+            font-family: 'Orbitron', monospace;
+            font-size: 70px;
+            font-weight: 900;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            text-shadow: 
+                0 0 8px rgba(107,127,215,0.3),
+                0 2px 8px rgba(0,0,0,0.8);
+        }
+
+        #dopamine .dopamine-hero-content p {
+            color: rgba(255,255,255,0.85);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 20px;
+        }
+
+        /* Combat Phone Mockup */
+        #dopamine .phone-mockup-container {
+            position: relative;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        #dopamine .phone-mockup::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(107,127,215,0.3) 0%, transparent 70%);
+            filter: blur(40px);
+            animation: auraRotate 8s linear infinite;
+        }
+
+        @keyframes auraRotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+            50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.2); }
+            100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); }
+        }
+
+        #dopamine .phone-frame {
+            border: 2px solid var(--app-cyan);
+            box-shadow: 
+                0 0 15px rgba(107,127,215,0.25),
+                0 20px 60px rgba(0,0,0,0.8),
+                inset 0 0 20px rgba(107,127,215,0.05);
+            background: linear-gradient(145deg, var(--card-bg), var(--darker-bg));
+        }
+
+        /* Combat Buttons */
+        #dopamine .btn-download {
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            transition: all 0.3s ease;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        #dopamine .btn-appstore {
+            background: linear-gradient(135deg, #5865f2, #4752c4);
+            border: none;
+            color: #ffffff;
+            box-shadow: 
+                0 0 10px rgba(107,127,215,0.25),
+                0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        #dopamine .btn-appstore:hover {
+            background: linear-gradient(135deg, #6b7fd7, #5865f2);
+            box-shadow: 
+                0 0 15px rgba(107,127,215,0.35),
+                0 6px 16px rgba(0,0,0,0.4);
+            transform: translateY(-4px);
+        }
+
+        #dopamine .btn-playstore {
+            background: rgba(255,255,255,0.08);
+            border: 2px solid rgba(255,255,255,0.5);
+            color: #ffffff;
+            box-shadow: 0 0 8px rgba(107,127,215,0.15);
+        }
+
+        #dopamine .btn-playstore:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.7);
+            box-shadow: 0 0 12px rgba(107,127,215,0.25);
+            transform: translateY(-4px);
+        }
+
+        /* Combat Sections */
+        #dopamine .dopamine-intro {
+            background: var(--dark-bg);
+        }
+
+        #dopamine .dopamine-intro h2 {
+            font-family: 'Orbitron', monospace;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(107,127,215,0.3);
+        }
+
+        #dopamine .dopamine-intro p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        #dopamine .intro-highlight {
+            background: linear-gradient(135deg, rgba(107,127,215,0.1), rgba(191,0,255,0.1));
+            border-left: 4px solid var(--app-cyan);
+            box-shadow: 0 0 20px rgba(107,127,215,0.2);
+        }
+
+        #dopamine .intro-highlight p {
+            color: rgba(255,255,255,0.9);
+        }
+
+        /* Combat Mode Cards */
+        #dopamine .modes-section {
+            background: var(--darker-bg);
+        }
+
+        #dopamine .section-header .section-label {
+            color: var(--app-cyan);
+            font-family: 'Orbitron', monospace;
+            text-shadow: 0 0 5px rgba(107,127,215,0.4);
+        }
+
+        #dopamine .section-header .section-title {
+            font-family: 'Orbitron', monospace;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(107,127,215,0.3);
+        }
+
+        #dopamine .section-header .section-subtitle {
+            color: rgba(255,255,255,0.7);
+        }
+
+        #dopamine .mode-card {
+            background: linear-gradient(145deg, rgba(26,31,46,0.8), rgba(10,14,20,0.9));
+            border: 3px solid var(--app-cyan);
+            clip-path: polygon(30px 0, 100% 0, 100% calc(100% - 30px), calc(100% - 30px) 100%, 0 100%, 0 30px);
+            box-shadow: 0 0 30px rgba(107,127,215,0.3);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #dopamine .mode-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent, rgba(107,127,215,0.05));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        #dopamine .mode-card:hover::before {
+            opacity: 1;
+        }
+
+        #dopamine .mode-card:hover {
+            box-shadow: 0 0 50px rgba(107,127,215,0.6);
+            transform: translateY(-10px);
+        }
+
+        #dopamine .mode-icon {
+            font-size: 100px;
+            filter: drop-shadow(0 0 20px var(--app-cyan));
+        }
+
+        #dopamine .mode-title {
+            font-family: 'Orbitron', monospace;
+            color: var(--app-cyan);
+            text-shadow: 0 0 8px rgba(107,127,215,0.3);
+        }
+
+        #dopamine .mode-subtitle {
+            color: var(--app-cyan);
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+        }
+
+        #dopamine .mode-description {
+            color: rgba(255,255,255,0.8);
+        }
+
+        #dopamine .mode-benefits {
+            background: rgba(26,31,46,0.6);
+        }
+
+        #dopamine .mode-benefits li {
+            color: rgba(255,255,255,0.9);
+            border-bottom: 1px solid rgba(107,127,215,0.2);
+        }
+
+        #dopamine .mode-benefits strong {
+            color: var(--app-cyan);
+        }
+
+        /* Combat Screenshots */
+        #dopamine .screenshots-section {
+            background: var(--dark-bg);
+        }
+
+        #dopamine .screenshot-mockup {
+            background: linear-gradient(145deg, var(--card-bg), var(--dark-bg));
+            border: 2px solid var(--app-cyan);
+            box-shadow: 0 0 30px rgba(107,127,215,0.3);
+            transition: all 0.4s ease;
+        }
+
+        #dopamine .screenshot-mockup:hover {
+            box-shadow: 0 0 50px rgba(107,127,215,0.6);
+            transform: scale(1.05);
+        }
+
+        #dopamine .screenshot-caption {
+            font-family: 'Orbitron', monospace;
+            color: var(--app-cyan);
+        }
+
+        #dopamine .screenshot-description {
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Combat How It Works */
+        #dopamine .how-it-works {
+            background: var(--darker-bg);
+        }
+
+        #dopamine .step-number {
+            background: linear-gradient(135deg, var(--app-cyan), var(--app-purple));
+            box-shadow: 0 0 20px rgba(107,127,215,0.4);
+        }
+
+        #dopamine .step h3 {
+            font-family: 'Orbitron', monospace;
+            color: var(--app-cyan);
+        }
+
+        #dopamine .step p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* Combat Arena Section */
+        #dopamine .section {
+            background: var(--dark-bg);
+        }
+
+        #dopamine .section.section-alt {
+            background: var(--darker-bg);
+        }
+
+        #dopamine .about-content h3 {
+            font-family: 'Orbitron', monospace;
+            color: var(--app-cyan);
+            text-shadow: 0 0 8px rgba(107,127,215,0.3);
+        }
+
+        #dopamine .about-content p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        /* Combat CTA */
+        #dopamine .cta-section {
+            background: linear-gradient(135deg, var(--dark-bg), var(--darker-bg));
+            position: relative;
+            overflow: hidden;
+        }
+
+        #dopamine .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(107,127,215,0.1), transparent);
+            animation: scan 3s linear infinite;
+        }
+
+        @keyframes scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        #dopamine .cta-section h2 {
+            font-family: 'Orbitron', monospace;
+            text-shadow: 0 0 12px rgba(107,127,215,0.4);
+        }
+
+        #dopamine .cta-section p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        #dopamine .cta-button {
+            background: linear-gradient(135deg, #5865f2, #4752c4);
+            font-family: 'Orbitron', monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ffffff;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+            box-shadow: 
+                0 0 10px rgba(107,127,215,0.3),
+                0 4px 16px rgba(0,0,0,0.4);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        #dopamine .cta-button:hover {
+            background: linear-gradient(135deg, #6b7fd7, #5865f2);
+            box-shadow: 
+                0 0 15px rgba(107,127,215,0.4),
+                0 6px 20px rgba(0,0,0,0.5);
+        }
+
+        /* Change logo when on dopamine page */
+        #dopamine ~ nav .logo,
+        body:has(#dopamine.active) nav .logo {
+            font-family: 'Orbitron', monospace;
+            font-style: normal;
+            color: var(--app-cyan);
+            text-shadow: 0 0 5px rgba(107,127,215,0.4);
+            letter-spacing: 3px;
+        }
+
+        /* Change nav background when on dopamine page */
+        body:has(#dopamine.active) nav {
+            background: rgba(10,14,20,0.95);
+            border-bottom: 2px solid var(--app-cyan);
+            box-shadow: 0 0 20px rgba(107,127,215,0.3);
+        }
+
+        body:has(#dopamine.active) .nav-links a {
+            color: #fff;
+        }
+
+        body:has(#dopamine.active) .nav-links a:hover {
+            color: var(--app-cyan);
+            text-shadow: 0 0 5px rgba(107,127,215,0.4);
+        }
+
+        body:has(#dopamine.active) .nav-links a.active::after {
+            background: var(--app-cyan);
+            box-shadow: 0 0 10px var(--app-cyan);
+        }
+
+        body:has(#dopamine.active) .est {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo" onclick="showPage('home')">
+                <span>Ulucado</span>
+                <span class="est">EST. 2025</span>
+            </div>
+            <ul class="nav-links">
+                <li><a onclick="showPage('home')" class="active" id="nav-home">Home</a></li>
+                <li><a onclick="showPage('about')" id="nav-about">About Us</a></li>
+                <li><a onclick="showPage('apps')" id="nav-apps">Apps</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HOME PAGE -->
+    <div id="home" class="page active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-container">
+                <h1>Apps That Enhance<br>Your Daily Life</h1>
+                <p>We craft beautiful, intuitive mobile applications that solve real problems. No gimmicks, just thoughtful design and genuine utility.</p>
+                <a onclick="showPage('apps')" class="hero-cta">
+                    Explore Our Apps
+                    <span>→</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="section">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-content">
+                        <div class="section-label">Who We Are</div>
+                        <h3>We believe technology should feel effortless</h3>
+                        <p>Founded in 2025, Ulucado emerged from a simple observation: most apps are either bloated with features nobody uses, or so stripped down they're barely useful.</p>
+                        <p>We took a different approach. Each Ulucado app is carefully designed to do one thing exceptionally well. No feature creep. No dark patterns. Just thoughtful software that respects your time and privacy.</p>
+                        <p>Our small team obsesses over every interaction, every animation, every detail—so you don't have to think about them at all.</p>
+                    </div>
+                    <div class="about-visual"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Philosophy Section -->
+        <section class="section section-alt">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">Our Philosophy</div>
+                    <h2 class="section-title">Designed With You in Mind</h2>
+                    <p class="section-subtitle">Every decision we make puts your experience first</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <span class="feature-icon">🔒</span>
+                        <h3>Privacy First</h3>
+                        <p>Your data stays on your device. We don't track, sell, or share your information. Ever.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">💎</span>
+                        <h3>Beautiful Design</h3>
+                        <p>Interfaces so intuitive, you'll wonder why other apps make things so complicated.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">⚡</span>
+                        <h3>Lightning Fast</h3>
+                        <p>Optimized for performance. No lag, no waiting, no frustration.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🎯</span>
+                        <h3>Focused Purpose</h3>
+                        <p>Each app does one thing brilliantly. No bloat, no clutter, no confusion.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🔄</span>
+                        <h3>Regular Updates</h3>
+                        <p>We constantly refine and improve based on real user feedback.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">💬</span>
+                        <h3>Human Support</h3>
+                        <p>Real people, real responses. No bots, no outsourcing, no runaround.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Ready to Experience<br>Better Apps?</h2>
+                <p>Discover our premium mobile applications</p>
+                <a onclick="showPage('apps')" class="cta-button">View Our Apps</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- ABOUT US PAGE -->
+    <div id="about" class="page">
+        <section class="hero">
+            <div class="hero-container">
+                <h1>About Ulucado</h1>
+                <p>A small team with big ideas about what apps should be</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-content">
+                        <div class="section-label">Our Story</div>
+                        <h3>Built by people who care</h3>
+                        <p>Ulucado was founded in 2025 out of frustration with the state of mobile apps. We were tired of bloated software designed to be addictive rather than helpful.</p>
+                        <p>So we built our first app: Dopamine Budget. A tool to help people manage their dopamine levels and build healthier digital habits. The response was overwhelming.</p>
+                        <p>That gave us the confidence to keep going. Today, we're a small team united by a simple belief: technology should serve people, not the other way around.</p>
+                    </div>
+                    <div class="about-visual"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-alt">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">Our Values</div>
+                    <h2 class="section-title">What We Stand For</h2>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <span class="feature-icon">🎯</span>
+                        <h3>Focus</h3>
+                        <p>We say no to 99% of feature requests. Every app does one thing exceptionally well.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🤝</span>
+                        <h3>Honesty</h3>
+                        <p>No dark patterns. No manipulative design. We're transparent about what our apps do.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">🌱</span>
+                        <h3>Sustainability</h3>
+                        <p>We build for the long term. Fair pricing means we can keep improving for years.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Want to Work With Us?</h2>
+                <p>We're always looking for talented people who share our values</p>
+                <a href="#" class="cta-button">View Open Positions</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- APPS PAGE -->
+    <div id="apps" class="page">
+        <section class="hero">
+            <div class="hero-container">
+                <h1>Our Apps</h1>
+                <p>Premium applications designed with care and precision</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Dopamine Budget</h2>
+                    <p class="section-subtitle">Master your dopamine, master your life</p>
+                </div>
+                <div style="text-align: center; margin-bottom: 60px;">
+                    <a onclick="showPage('dopamine')" class="hero-cta">
+                        Learn More About Dopamine Budget
+                        <span>→</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-alt">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">Coming Soon</div>
+                    <h2 class="section-title">More Apps in Development</h2>
+                    <p class="section-subtitle">We're working on new tools to enhance your digital wellbeing</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- DOPAMINE BUDGET PAGE -->
+    <div id="dopamine" class="page">
+        <!-- Hero -->
+        <section class="dopamine-hero">
+            <div class="dopamine-hero-grid">
+                <div class="dopamine-hero-content">
+                    <h1>DOMINATE YOUR DISTRACTIONS</h1>
+                    <p>The hunter doesn't wait for focus—they seize it. Budget your dopamine. Guard your time. Build sustainable motivation and achieve lasting focus.</p>
+                    <div class="download-buttons">
+                        <a href="#" class="btn-download btn-appstore">
+                            📱 Download on App Store
+                        </a>
+                        <a href="#" class="btn-download btn-playstore">
+                            ▶ Get it on Google Play
+                        </a>
+                    </div>
+                </div>
+                <div class="phone-mockup-container">
+                    <div class="phone-mockup">
+                        <div class="phone-frame">
+                            <div class="phone-screen">
+                                <img src="app_1.jpeg" alt="Dopamine Budget App">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Introduction -->
+        <section class="dopamine-intro">
+            <div class="intro-content">
+                <h2>What is Dopamine Budget?</h2>
+                <p>Dopamine Budget is a revolutionary app that helps you manage your brain's reward system. Think of it as a personal trainer for your motivation—teaching you to build sustainable energy instead of relying on quick dopamine hits.</p>
+                <p>In our modern world, we're constantly bombarded with instant gratification: social media notifications, junk food, endless entertainment. These activities drain your "dopamine reservoir," leaving you unmotivated for the things that truly matter.</p>
+                <div class="intro-highlight">
+                    <p><strong>Dopamine Budget helps you:</strong> Track activities that drain or build your dopamine levels, understand your patterns, and develop healthier habits that lead to sustained focus, energy, and accomplishment.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hunter vs Guardian Modes -->
+        <section class="modes-section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">SELECT YOUR PATH</div>
+                    <h2 class="section-title">CHOOSE YOUR COMBAT STYLE</h2>
+                    <p class="section-subtitle">Hunter or Guardian—two paths to dopamine dominance</p>
+                </div>
+                <div class="modes-grid">
+                    <div class="mode-card">
+                        <div class="mode-icon">🏹</div>
+                        <h3 class="mode-title">THE HUNTER</h3>
+                        <p class="mode-subtitle">Aggressive Reward System</p>
+                        <p class="mode-description">Start at zero. Every victory earns you power. Track your conquests, earn your dopamine through battle. Each task completed is a kill confirmed.</p>
+                        <ul class="mode-benefits">
+                            <li><strong>⚔️ Earn Credits</strong> through productive combat</li>
+                            <li><strong>🎯 Active Tracking</strong> of every conquest</li>
+                            <li><strong>🔥 Build Momentum</strong> with streak multipliers</li>
+                            <li><strong>💎 Unlock Rewards</strong> as you dominate</li>
+                        </ul>
+                    </div>
+                    <div class="mode-card">
+                        <div class="mode-icon">🛡️</div>
+                        <h3 class="mode-title">THE GUARDIAN</h3>
+                        <p class="mode-subtitle">Defensive Shield System</p>
+                        <p class="mode-description">Start with full power. Protect your energy reservoir. Block distractions before they drain you. Master the art of defensive focus.</p>
+                        <ul class="mode-benefits">
+                            <li><strong>🛡️ Shield Your Focus</strong> from time thieves</li>
+                            <li><strong>⚡ Friction Mechanics</strong> block temptations</li>
+                            <li><strong>🔒 Preserve Energy</strong> through discipline</li>
+                            <li><strong>🌙 Rest Mode</strong> for regeneration</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screenshots Showcase -->
+        <section class="screenshots-section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">COMBAT INTERFACE</div>
+                    <h2 class="section-title">BATTLE SCREENS</h2>
+                </div>
+                <div class="screenshots-grid">
+                    <div class="screenshot-item">
+                        <div class="screenshot-mockup">
+                            <img src="app_2.jpeg" alt="Sleep Mode">
+                        </div>
+                        <h4 class="screenshot-caption">Sleep Mode</h4>
+                        <p class="screenshot-description">Stabilize your nights, upgrade your days with better dopamine balance.</p>
+                    </div>
+                    <div class="screenshot-item">
+                        <div class="screenshot-mockup">
+                            <img src="app_3.jpeg" alt="Mental Clarity">
+                        </div>
+                        <h4 class="screenshot-caption">Clarity</h4>
+                        <p class="screenshot-description">Reduce mental fog by managing stimulation and building focus.</p>
+                    </div>
+                    <div class="screenshot-item">
+                        <div class="screenshot-mockup">
+                            <img src="app_4.jpeg" alt="Sustainable Energy">
+                        </div>
+                        <h4 class="screenshot-caption">Energy</h4>
+                        <p class="screenshot-description">Trade quick hits for real drive and sustainable motivation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="how-it-works">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-label">Simple Process</div>
+                    <h2 class="section-title">How Dopamine Budget Works</h2>
+                </div>
+                <div class="steps-grid">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Choose Your Mode</h3>
+                        <p>Select Hunter (earn dopamine) or Guardian (protect dopamine) based on your approach.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Track Activities</h3>
+                        <p>Log what builds you up (exercise, work) and what drains you (social media, junk food).</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Monitor Progress</h3>
+                        <p>Watch your dopamine reservoir fill or drain throughout the day in real-time.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Build Better Habits</h3>
+                        <p>Use insights to make smarter choices and develop sustainable motivation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Arena Section -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">YOUR DOPAMINE ARENA</h2>
+                </div>
+                <div class="about-grid">
+                    <div class="screenshot-mockup" style="max-width: 350px; margin: 0 auto;">
+                        <img src="app_5.jpeg" alt="Arena Dashboard">
+                    </div>
+                    <div class="about-content">
+                        <p>Track your daily balance with a beautiful, intuitive interface. See your dopamine reservoir in real-time as you log activities throughout the day.</p>
+                        <p>Build streaks, monitor your progress, and understand what truly energizes or depletes you. The Arena is your command center for dopamine management.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Section -->
+        <section class="section section-alt">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">BATTLE STATISTICS</h2>
+                </div>
+                <div class="about-grid">
+                    <div class="about-content">
+                        <p>See your dopamine patterns over time with comprehensive analytics. Track your weekly net dopamine change, current balance, and streak performance.</p>
+                        <p>Unlock insights as you build consistency. The Progress view helps you identify patterns and make data-driven improvements to your habits.</p>
+                    </div>
+                    <div class="screenshot-mockup" style="max-width: 350px; margin: 0 auto;">
+                        <img src="app_6.jpeg" alt="Progress Tracking">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>READY FOR COMBAT?</h2>
+                <p>Download Dopamine Budget. Choose your path. Dominate your focus.</p>
+                <a href="#" class="cta-button">ENTER THE ARENA</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div>
+                <div class="footer-brand">Ulucado</div>
+                <p class="footer-tagline">Premium mobile applications crafted with care. Making technology feel effortless since 2025.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Apps</h4>
+                <ul class="footer-links">
+                    <li><a onclick="showPage('apps')">All Apps</a></li>
+                    <li><a onclick="showPage('dopamine')">Dopamine Budget</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <ul class="footer-links">
+                    <li><a onclick="showPage('about')">About Us</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Ulucado. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update nav active state
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+            });
+            const navLink = document.getElementById('nav-' + pageId);
+            if (navLink) {
+                navLink.classList.add('active');
+            }
+            
+            // Change logo based on page
+            const logo = document.querySelector('.logo span:first-child');
+            const est = document.querySelector('.est');
+            
+            if (pageId === 'dopamine') {
+                logo.textContent = 'DOPAMINE BUDGET';
+                if (est) est.style.display = 'none';
+            } else {
+                logo.textContent = 'Ulucado';
+                if (est) est.style.display = 'block';
+            }
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
